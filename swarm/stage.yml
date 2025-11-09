@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  service-a-stage:
+    image: poc/service-a:${VERSION:-latest}
+    ports:
+      - "9081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 5s
+      # placement constraints removed for single-node testing
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8081/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - stage-network
+
+  service-b-stage:
+    image: poc/service-b:${VERSION:-latest}
+    ports:
+      - "9082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 5s
+      # placement constraints removed for single-node testing
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - stage-network
+
+  service-c-stage:
+    image: poc/service-c:${VERSION:-latest}
+    ports:
+      - "9083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=stage
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+        monitor: 60s
+        order: start-first
+      rollback_config:
+        parallelism: 1
+        delay: 5s
+      # placement constraints removed for single-node testing
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8083/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    networks:
+      - stage-network
+
+networks:
+  stage-network:
+    driver: overlay

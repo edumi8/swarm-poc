@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  service-a-local:
+    image: poc/service-a:${VERSION:-latest}
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    deploy:
+      replicas: 1
+    networks:
+      - local-network
+
+  service-b-local:
+    image: poc/service-b:${VERSION:-latest}
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    deploy:
+      replicas: 1
+    networks:
+      - local-network
+
+  service-c-local:
+    image: poc/service-c:${VERSION:-latest}
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+    deploy:
+      replicas: 1
+    networks:
+      - local-network
+
+networks:
+  local-network:
+    driver: overlay
