@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Remote deployment script for STAGE environment
 # Usage: SWARM_MANAGER=user@stage-manager-ip ./deploy-stage-remote.sh

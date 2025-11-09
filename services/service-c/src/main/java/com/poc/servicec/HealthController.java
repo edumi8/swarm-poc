@@ -2,25 +2,29 @@ package com.poc.servicec;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 public class HealthController {
     
+    // Cache static responses to avoid recreating HashMaps on every request
+    private static final Map<String, String> HOME_RESPONSE = Map.of(
+        "service", "service-c",
+        "status", "running",
+        "version", "1.0.0"
+    );
+    
+    private static final Map<String, String> HEALTH_RESPONSE = Map.of(
+        "status", "UP"
+    );
+    
     @GetMapping("/")
     public Map<String, String> home() {
-        Map<String, String> response = new HashMap<>();
-        response.put("service", "service-c");
-        response.put("status", "running");
-        response.put("version", "1.0.0");
-        return response;
+        return HOME_RESPONSE;
     }
 
     @GetMapping("/health")
     public Map<String, String> health() {
-        Map<String, String> response = new HashMap<>();
-        response.put("status", "UP");
-        return response;
+        return HEALTH_RESPONSE;
     }
 }

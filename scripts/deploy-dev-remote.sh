@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Remote deployment script for DEV environment
 # Usage: SWARM_MANAGER=user@dev-manager-ip ./deploy-dev-remote.sh

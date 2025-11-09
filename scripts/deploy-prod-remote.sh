@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 # Remote deployment script for PROD environment
 # Usage: SWARM_MANAGER=user@prod-manager-ip ./deploy-prod-remote.sh

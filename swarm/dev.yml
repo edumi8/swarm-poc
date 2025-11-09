@@ -7,6 +7,7 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - JAVA_OPTS=-Xmx256m -Xms128m
     deploy:
       replicas: 2
       restart_policy:
@@ -21,6 +22,13 @@ services:
       rollback_config:
         parallelism: 1
         delay: 5s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 384M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8081/actuator/health"]
       interval: 30s
@@ -36,6 +44,7 @@ services:
       - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - JAVA_OPTS=-Xmx256m -Xms128m
     deploy:
       replicas: 2
       restart_policy:
@@ -50,6 +59,13 @@ services:
       rollback_config:
         parallelism: 1
         delay: 5s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 384M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8082/actuator/health"]
       interval: 30s
@@ -65,6 +81,7 @@ services:
       - "8083:8083"
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+      - JAVA_OPTS=-Xmx256m -Xms128m
     deploy:
       replicas: 2
       restart_policy:
@@ -79,6 +96,13 @@ services:
       rollback_config:
         parallelism: 1
         delay: 5s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 384M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8083/actuator/health"]
       interval: 30s
